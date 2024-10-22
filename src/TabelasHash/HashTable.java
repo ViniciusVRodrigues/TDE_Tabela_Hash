@@ -1,3 +1,5 @@
+package TabelasHash;
+
 import java.util.Arrays;
 
 public class HashTable {
