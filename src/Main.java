@@ -5,5 +5,6 @@ public class Main {
         //Lendo arquivo csv names_5000.csv
         String caminho = "names_5000.csv";
         LeitorCSV leitor = new LeitorCSV(caminho);
+
     }
 }
