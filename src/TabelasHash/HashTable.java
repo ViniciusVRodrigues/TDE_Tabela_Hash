@@ -1,13 +1,17 @@
 package TabelasHash;
 
+import Relatorio.ReportManager;
+
 import java.util.Arrays;
 
-public abstract class HashTable {
+public abstract class HashTable extends ReportManager {
     protected String[] table;
     protected int currentSize;
 
     public HashTable(int size) {
         table = new String[size];
+        currentSize = 0;
+        collisions = 0;
     }
 
     //Função Hash que não resulta em colisões
@@ -25,14 +29,22 @@ public abstract class HashTable {
     public void insert(String value) {
         if (isFull()) {
             increaseSize();
-            return;
         }
         int index = hash(value);
         while (table[index] != null) {
+            incrementCollisions();
             index = (index + 1) % table.length;
         }
         currentSize++;
         table[index] = value;
+    }
+
+    public void insertAll(String[] values) {
+        startInsertion();
+        for (String value : values) {
+            insert(value);
+        }
+        endInsertion();
     }
 
     //Função Buscar que retorna true se a chave está na tabela
@@ -42,6 +54,14 @@ public abstract class HashTable {
             index = (index + 1) % table.length;
         }
         return table[index] != null;
+    }
+
+    public void searchAll(String[] values) {
+        startSearch();
+        for (String value : values) {
+            search(value);
+        }
+        endSearch();
     }
 
     //Função Deletar que remove uma chave da tabela
@@ -60,6 +80,18 @@ public abstract class HashTable {
                 index = (index + 1) % table.length;
             }
         }
+    }
+
+    //Função que exibe a distribuição das chaves: Verifique a distribuição das chaves nas tabelas (quantidade de chaves em cada posição).
+    public void keysPerHash() {
+        int[] keysPerHash = new int[table.length];
+        for (String key : table) {
+            if (key != null) {
+                keysPerHash[hash(key)]++;
+            }
+        }
+        System.out.println("Distribuição das chaves:");
+        System.out.println(Arrays.toString(keysPerHash));
     }
 
     //Função Imprimir que imprime a tabela

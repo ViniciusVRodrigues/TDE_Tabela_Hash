@@ -28,7 +28,7 @@ public class LeitorCSV {
         }
     }
 
-    public List<String> getNomes() {
-        return nomes;
+    public String[] getNomes() {
+        return nomes.toArray(new String[0]);
     }
 }

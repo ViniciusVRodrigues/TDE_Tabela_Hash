@@ -9,8 +9,8 @@ public class HashTableFunctionB extends HashTable {
     public int hash(String value) {
         int hash = 0;
         for (int i = 0; i < value.length(); i++) {
-            hash += value.charAt(i);
+            hash += value.charAt(i) * (31 ^ i);
         }
-        return hash % table.length;
+        return Math.abs(hash) % table.length;
     }
 }
