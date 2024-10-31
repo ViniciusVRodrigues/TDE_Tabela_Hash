@@ -6,8 +6,8 @@ public class Main {
     public static void main(String[] args) {
         String caminho = "names_5000.csv";
         LeitorCSV leitor = new LeitorCSV(caminho);
-        int quantidadeParaInserir = 500;
-        int quantidadeParaBuscar = 100;
+        int quantidadeParaInserir = 5000;
+        int quantidadeParaBuscar = 500;
         String[] valoresParaInserir = new String[quantidadeParaInserir];
         for (int i = 0; i < quantidadeParaInserir; i++) {
             valoresParaInserir[i] = leitor.getNomes()[i];
