@@ -4,7 +4,7 @@ import TabelasHash.HashTableFunctionB;
 
 public class Main {
     public static void main(String[] args) {
-        String caminho = "names_5000.csv";
+        String caminho = "female_names.csv";
         LeitorCSV leitor = new LeitorCSV(caminho);
         int quantidadeParaInserir = 5000;
         int quantidadeParaBuscar = 500;
