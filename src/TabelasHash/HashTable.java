@@ -7,6 +7,7 @@ import java.util.Arrays;
 public abstract class HashTable extends ReportManager {
     protected String[] table;
     protected int currentSize;
+    protected double loadFactor;
 
     public HashTable(int size) {
         table = new String[size];
@@ -14,21 +15,26 @@ public abstract class HashTable extends ReportManager {
         collisions = 0;
     }
 
-    //Função Hash que não resulta em colisões
     public abstract int hash(String value);
 
     public boolean isFull() {
-        return currentSize == table.length;
+        return currentSize >= table.length * loadFactor;
     }
 
-    public void increaseSize(){
-        table = Arrays.copyOf(table, table.length * 2);
+    public void rehash(){
+        String[] temp = table;
+        table = new String[table.length*2];
+        currentSize = 0;
+        for(String value : temp){
+            if(value != null){
+                insert(value);
+            }
+        }
     }
 
-    //Função Inserir que insere uma chave na tabela hash e trata colisões
     public void insert(String value) {
         if (isFull()) {
-            increaseSize();
+            rehash();
         }
         int index = hash(value);
         while (table[index] != null) {
@@ -47,7 +53,6 @@ public abstract class HashTable extends ReportManager {
         endInsertion();
     }
 
-    //Função Buscar que retorna true se a chave está na tabela
     public boolean search(String value) {
         int index = hash(value);
         while (table[index] != null && !table[index].equals(value)) {
@@ -64,7 +69,6 @@ public abstract class HashTable extends ReportManager {
         endSearch();
     }
 
-    //Função Deletar que remove uma chave da tabela
     public void delete(String value) {
         int index = hash(value);
         while (table[index] != null && !table[index].equals(value)) {
@@ -82,7 +86,6 @@ public abstract class HashTable extends ReportManager {
         }
     }
 
-    //Função que exibe a distribuição das chaves: Verifique a distribuição das chaves nas tabelas (quantidade de chaves em cada posição).
     public void keysPerHash() {
         int[] keysPerHash = new int[table.length];
         for (String key : table) {
@@ -91,7 +94,10 @@ public abstract class HashTable extends ReportManager {
             }
         }
         System.out.println("Distribuição das chaves:");
-        System.out.println(Arrays.toString(keysPerHash));
+        for(int i = 0; i < keysPerHash.length; i++){
+            if(keysPerHash[i] != 0)
+                System.out.println(i + ": " + keysPerHash[i]);
+        }
     }
 
     //Função Imprimir que imprime a tabela

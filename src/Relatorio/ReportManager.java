@@ -8,6 +8,7 @@ public abstract class ReportManager {
     private long searchEndTime;
     private long searchDelta;
     protected int collisions;
+
     public void startInsertion(){
         insertionStartTime = System.nanoTime();
     }
@@ -34,7 +35,6 @@ public abstract class ReportManager {
 
     public abstract void keysPerHash();
 
-    //Comparando duas tabelas, e exibindo a tabela X é mais rápida em tantos numeros
     public void compare(ReportManager other, String name, String otherName){
         System.out.println("Comparação entre " + name + " e " + otherName);
         if (insertionDelta < other.insertionDelta){
