@@ -13,6 +13,7 @@ public abstract class HashTable extends ReportManager {
         table = new String[size];
         currentSize = 0;
         collisions = 0;
+        loadFactor = 0.75;
     }
 
     public abstract int hash(String value);
